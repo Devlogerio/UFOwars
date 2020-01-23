@@ -6,8 +6,12 @@ Choose a role before play the game, each role has its unuque upgrades during the
 Choose between two options (Trappist and Earth), then you have to destroy the other planet before they destroy yours, You can also blow stones up and get score to upgrade your UFO.
 You can also see who has the most score by checking the leaderboard up.
 
-## How its made
+## About the making
 This game is made by Nodejs/Javascript/Socket.io/HTML5, No library is used for visuals
+It was made in 2016 as an indie game for competing in .io genre
+
+## More games like this:
+#http://pury.space
 
 ## How to run:
 Install nodejs
@@ -17,7 +21,6 @@ Run the server using (node app.js) in the terminal
 Open the page on localhost://port (the port is 2000)
 
 ## About:
-This game was made in 2016 as an indie game for competing in .io genre
 
 ## Contact:
 Made by: Cena Abachi --- 
