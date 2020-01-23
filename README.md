@@ -20,7 +20,7 @@ Open the page on localhost://port (the port is 2000)
 This game was made in 2016 as an indie game for competing in .io genre
 
 ## Contact:
-Made by: Cena Abachi
-Mail: devloger.io@gmail.com
+Made by: Cena Abachi --- 
+Mail: devloger.io@gmail.com --- 
 Phone: +98 912 857 3237
 
