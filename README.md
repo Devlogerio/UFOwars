@@ -2,7 +2,7 @@
 A multiplayer .io online game made by Html5 Javascript Nndejs and socket.io (no game engine is used).
 Choose your faction and fight for your planet. This is a multiplayer online .io game made by Javasript/Nodejs without the use of a visual library.
 
-## How to playe
+## How to play
 Choose a role before play the game, each role has its unuque upgrades during the game for your UFO, by each upgrade your UFO will be changed to an upgraded model.
 Choose between two options (Trappist and Earth), then you have to destroy the other planet before they destroy yours, You can also blow stones up and get score to upgrade your UFO.
 You can also see who has the most score by checking the leaderboard up.
