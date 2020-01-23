@@ -1,0 +1,2178 @@
+<html lang="en">
+<head>    
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="description" content="Ufowars is a multiplayer fantasy shooting game which will let you choose a UFO and fight against your enemies and make party with your friends, get yourself at the top of the leaderboard and upgrade your plasma bullets to highest possible level.">
+<meta name="keywords" content="ufowars,ufo,wars,.io,ufowarsio,game,multiplayer,sight,fight,battle,UFO,online,space,sky,star,war">
+<meta name="author" content="Cena/olympus.healer@gmail.com"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta charset="utf-8">
+
+
+<style>
+
+
+body {
+    margin:0px;
+	padding:0px;
+	zoom: reset;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	overflow: hidden;
+}
+
+
+.animationer{
+display:none;width:100%;height:100%;position:absolute;
+}
+
+
+.animator{
+	display:none;
+	width:100%;
+	height:100%;
+	position:absolute;
+	background-color:black;
+	background-image: url('client/img/maps/stars.png');
+}
+
+.signDiv{
+	width:100%;
+	height:100%;
+	position:absolute;
+	background-color:black;
+	background-image: url('client/img/maps/stars.png');
+}
+
+
+.log{
+color:#78939e;
+font-size:15px;
+position:absolute;
+
+
+
+
+}
+.button {
+  vertical-align:middle;
+  outline: none;
+  display: inline-block;
+  font-size:30px;
+  border-radius: 15px;
+  background-color: #ffffff;
+  border: none;
+  color: #000000;
+  text-align: center;
+  padding: 5px;
+  width: 30%;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.homePage {
+    margin-top: 120px;
+	position:relative;
+	width:800px;
+	height:40%;
+	text-align:center;
+}
+
+.helper{
+	font-family:bold;
+	font-size:20px;
+	opacity:0.5;
+	font-family:arial;
+	color:white;
+	margin-top:10px;
+}
+
+.moreGames{
+background-color:#2e3a66;
+border-radius:15px;
+color:white;
+}
+@media only screen and (max-height: 500px) {
+    .homePage {
+        margin-top: 10px;
+    }
+}
+@media only screen and (max-width: 700px) {
+    .homePage {
+        margin-left: -80px;
+    }
+}
+</style>
+
+
+
+
+
+
+    <title>ufowars.io</title>
+	<link rel="icon" href="/client/img/logo/icon.png">
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+</head>
+<body oncontextmenu="return false;">
+
+
+	
+<div>
+	<div id="animator" class="animator" style="">
+		<image id="animationer1" class="animationer" style="background-image: url('client/img/animation/1.png');background-position: center center;background-repeat:no-repeat;">
+		</image>
+		<image id="animationer2" class="animationer" style="background-image: url('client/img/animation/2.png');background-position: center center;background-repeat:no-repeat;">
+		</image>                                                                                               
+		<image id="animationer3" class="animationer" style="background-image: url('client/img/animation/3.png');background-position: center center;background-repeat:no-repeat;">
+		</image>                                                                                               
+		<image id="animationer4" class="animationer" style="background-image: url('client/img/animation/4.png');background-position: center center;background-repeat:no-repeat;">
+		</image>                                                                                               
+		<image id="animationer5" class="animationer" style="background-image: url('client/img/animation/5.png');background-position: center center;background-repeat:no-repeat;">
+		</image>
+	</div>
+	<div id="signDiv" class="signDiv">
+	<p class="log">Developed by Cena Abachi: game.ufowars.io@gmail.com<br/><br/>Log: New class released.<br/>Log: Players now have a choice protecting earth or destroy it.<br/>Log: Ugrade level 4 has been added!<br/>Log: Upgrade level 4 is now available from 4000 score.<br/>Log: New UFO's has been added.<br/>Log: Backend optimized.<br/>Log: Rebels are now from Trappist-1<br/>Log: Trappist protectors should defense trappist<br/>Log: Last update on 3/26/2017</p>
+		<center>
+		<div class="homePage">
+		<div id="headerDiv" style="font-family:bold;font-size:60px;oopacity:0.5;font-family:Georgia;color:white;">ufowars.io</div>
+			<input id="signDiv-username" style="position:relative;outline:none;width:50%;height:50px;border-radius:20px;font-size:40px;font-color:#ddd3ff;font-weight:bold;text-align:center;background-color : white; " placeholder="Enter a name..." type="text"></input><br>
+			<button id="signDiv-signIn" class="button"><span>Play</span></button>
+				<div style="position:relative;outline:none;width:100%;margin-top:10px;font-size:20px;color:white;font-weight:bold;text-align:center;color:#a8a8a8">
+					<input id="autoRadio" type="radio" name="type1" value="tank" checked> auto
+					<input id="protectorsRadio" type="radio" name="type1" value="gunner"> Earth protector
+					<input id="rebelsRadio" type="radio" name="type1" value="gunner"> Trappist protector
+				</div>
+				<div style="position:relative;outline:none;width:100%;margin-top:10px;font-size:20px;color:white;font-weight:bold;text-align:center;">
+					<input id="tankRadio" type="radio" name="type" value="tank" checked> Tank
+					<input id="gunnerRadio" type="radio" name="type" value="gunner"> Gunner
+					<input id="cannonRadio" type="radio" name="type" value="cannon"> Cannon
+					<input id="bullyRadio" type="radio" name="type" value="cannon"> Support
+					<br/>
+					<button type="button" disabled="disabled" style="width:80px;height:60px;background-image: url('client/img/stats/1.png');background-size: 100%;border: none;"></button>
+					<button type="button" disabled="disabled" style="width:80px;height:60px;background-image: url('client/img/stats/2.png');background-size: 100%;border: none;"></button>
+					<button type="button" disabled="disabled" style="width:80px;height:60px;background-image: url('client/img/stats/3.png');background-size: 100%;border: none;"></button>
+					<button type="button" disabled="disabled" style="width:80px;height:60px;background-image: url('client/img/stats/4.png');background-size: 100%;border: none;"></button>
+				</div>
+		<div class="helper"><div>How to play: Hold Left click to attack, Right click to use bonus, press Enter to chat</div><a href="http://iogames.space" target="_blank">
+		<button class="moreGames">more io games</button></a></div>
+		
+		</div></center>
+	</div>
+	
+	<div id="gameDiv" style="display:none;overflow-y: hide;overflow-x:hide;zoom: reset;">
+		
+		<div style="margin-left:10px;margin-top:10px;height:200px;color:#78939e;overflow-y:hide;font-size:20px; position:absolute; text-decoration:underline;">Earth Protectors board</div>
+		
+		<div id="partyCoderShower" style="margin-top:25px;width:100%;height:10px;color:#78939e;font-size:25px; position:absolute;text-align:center"></div>
+		
+		<div id="topTenShowDiv" style="margin-left:10px;margin-top:35px;height:200px;color:#78939e;overflow-y:hide;font-size:20px; position:absolute;"></div>
+		
+		<div style="margin-left:10px;margin-top:10px;height:200px;color:#78939e;margin-right:10px;overflow-y:hide;font-size:20px; position:absolute; text-decoration:underline;direction:rtl;width:98%">Trappist Protectors board</div>
+		
+		<div id="topTenShowDiv1" style="margin-left:10px;margin-top:35px;height:200px;color:#78939e;overflow-y:hide;font-size:20px; position:absolute;direction:rtl;width:98%;margin-right:10px"></div>
+		
+		
+		<div id="afterDeath" style="display:none;margin-left:20%;margin-top:50px;height:90%;width:60%;position:absolute;background-color:#78939e;opacity:0.8">
+			<div style="position:absolute;width:80%;margin-left:10%;height:85%;background-color:#162c51;margin-top:20px;text-align:center"><div style="margin-top:10%;font-size:30px;color:white">RESERVE THIS BOARD!<br/>contact: game.ufowars.io@gmail.com</div></div>
+		</div>
+		
+		
+		
+		
+		
+		<canvas id="ctx" style="background-color:#45234d;zoom: reset;"></canvas>
+		<canvas id="gps" style="display:block;width:250px;height:150px;position:absolute;bottom:5px;left:5px;margin-left:5px;background-color:gray;opacity:0.4"></canvas>
+	
+	
+	
+	
+	
+	<div id="chatConsole" style="font-size:20px;color:white">
+					<div id="chat-text" style="width:30%;height:120px;overflow-y:scroll;position:absolute;bottom:20px;left:35%;text-align:center;pointer-events: none;opacity: 0.4;word-wrap: break-word;overflow: hidden;">
+						<div>Press Enter to chat</div>
+					</div>
+				
+					<form id="chat-form" style="display:none">
+						<input id="chat-input" type="text" style="width:30%;position:absolute;bottom:0px;left:35%;text-align:center;background-color:rgba(0, 0, 0, 0);color:white"  placeholder="Type..."></input>
+					</form>
+			</div>
+	</div>
+ 
+</div>
+
+ 
+<script src="/socket.io/socket.io.js"></script>
+<script>
+
+
+
+
+///////////////////////////////////////////All variables/////////////////////////////////////////////////////////////
+	var WIDTH =  window.innerWidth - 10;
+    var HEIGHT =  window.innerHeight - 10;
+    var socket = io();
+    var signDiv = document.getElementById('signDiv');
+    var afterDeath = document.getElementById('afterDeath');
+    var afterGame = document.getElementById('afterGame');
+    var headerDiv = document.getElementById('headerDiv');
+    var signDivUsername = document.getElementById('signDiv-username');
+    var partyCoderShower = document.getElementById('partyCoderShower');
+    var signDivSignIn = document.getElementById('signDiv-signIn');
+    var chatConsole = document.getElementById('chatConsole');
+    var animationer = document.getElementById('animationer');
+    var animationer1 = document.getElementById('animationer1');
+    var animationer2 = document.getElementById('animationer2');
+    var animationer3 = document.getElementById('animationer3');
+    var showUfoUpdate = false;
+	var WIDTH =  window.innerWidth - 100;
+    var HEIGHT =  window.innerHeight - 100;
+	var isReset = false;
+	var endingReason = "";
+	var Img = {};
+	
+	
+	
+	
+	
+	Img.earth = new Image();
+	Img.earth.src = '/client/img/earth/1.png';
+	Img.earth1 = new Image();
+	Img.earth1.src = '/client/img/earth/2.png';
+	
+	
+	
+	Img.kaboom = new Image();
+	Img.kaboom.src = '/client/img/kaboom/1.png';
+	
+	
+	
+	
+	////////////////////////       0
+	Img.type1 = new Image();
+	Img.type1.src = '/client/img/ufos/lvl 0/1.png';
+	Img.type2 = new Image();
+	Img.type2.src = '/client/img/ufos/lvl 0/2.png';
+	Img.type3 = new Image();
+	Img.type3.src = '/client/img/ufos/lvl 0/3.png';
+	Img.type4 = new Image();
+	Img.type4.src = '/client/img/ufos/lvl 0/4.png';
+	////////////////////////
+	
+	
+	////////////////////////       1
+	Img.type1_1 = new Image();
+	Img.type1_1.src = '/client/img/ufos/lvl 1 tank/1.png';
+	Img.type1_2 = new Image();          
+	Img.type1_2.src = '/client/img/ufos/lvl 1 tank/2.png';
+	Img.type1_3 = new Image();          
+	Img.type1_3.src = '/client/img/ufos/lvl 1 tank/3.png';
+	
+	
+	
+	Img.type1_1_1 = new Image();
+	Img.type1_1_1.src = '/client/img/ufos/lvl 2 tank/1.png';
+	Img.type1_2_1 = new Image();
+	Img.type1_2_1.src = '/client/img/ufos/lvl 2 tank/2.png';
+	Img.type1_3_1 = new Image();
+	Img.type1_3_1.src = '/client/img/ufos/lvl 2 tank/3.png';
+	
+	
+	
+	Img.type1_1_2 = new Image();
+	Img.type1_1_2.src = '/client/img/ufos/lvl 3 tank/1.png';
+	Img.type1_2_2 = new Image();
+	Img.type1_2_2.src = '/client/img/ufos/lvl 3 tank/2.png';
+	Img.type1_3_2 = new Image();
+	Img.type1_3_2.src = '/client/img/ufos/lvl 3 tank/3.png';
+	
+	
+	
+	Img.type1_1_3 = new Image();
+	Img.type1_1_3.src = '/client/img/ufos/lvl 4 tank/1.png';
+	Img.type1_2_3 = new Image();
+	Img.type1_2_3.src = '/client/img/ufos/lvl 4 tank/2.png';
+	Img.type1_3_3 = new Image();
+	Img.type1_3_3.src = '/client/img/ufos/lvl 4 tank/3.png';
+	////////////////////////
+	
+	
+	
+	////////////////////////       2
+	Img.type2_1 = new Image();
+	Img.type2_1.src = '/client/img/ufos/lvl 1 gunner/1.png';
+	Img.type2_2 = new Image();          
+	Img.type2_2.src = '/client/img/ufos/lvl 1 gunner/2.png';
+	Img.type2_3 = new Image();          
+	Img.type2_3.src = '/client/img/ufos/lvl 1 gunner/3.png';
+	
+	
+	
+	
+	Img.type2_1_1 = new Image();
+	Img.type2_1_1.src = '/client/img/ufos/lvl 2 gunner/1.png';
+	Img.type2_2_1 = new Image();         
+	Img.type2_2_1.src = '/client/img/ufos/lvl 2 gunner/2.png';
+	Img.type2_3_1 = new Image();          
+	Img.type2_3_1.src = '/client/img/ufos/lvl 2 gunner/3.png';
+	
+	
+	
+	Img.type2_1_2 = new Image();
+	Img.type2_1_2.src = '/client/img/ufos/lvl 3 gunner/1.png';
+	Img.type2_2_2 = new Image();
+	Img.type2_2_2.src = '/client/img/ufos/lvl 3 gunner/2.png';
+	Img.type2_3_2 = new Image();
+	Img.type2_3_2.src = '/client/img/ufos/lvl 3 gunner/3.png';
+	
+	
+	
+	Img.type2_1_3 = new Image();
+	Img.type2_1_3.src = '/client/img/ufos/lvl 4 gunner/1.png';
+	Img.type2_2_3 = new Image();
+	Img.type2_2_3.src = '/client/img/ufos/lvl 4 gunner/2.png';
+	Img.type2_3_3 = new Image();
+	Img.type2_3_3.src = '/client/img/ufos/lvl 4 gunner/3.png';
+	////////////////////////
+	
+	
+	
+	
+	////////////////////////       3
+	Img.type3_1 = new Image();
+	Img.type3_1.src = '/client/img/ufos/lvl 1 cannon/1.png';
+	Img.type3_2 = new Image();
+	Img.type3_2.src = '/client/img/ufos/lvl 1 cannon/2.png';
+	Img.type3_3 = new Image();
+	Img.type3_3.src = '/client/img/ufos/lvl 1 cannon/3.png';
+	
+	
+	
+	Img.type3_1_1 = new Image();
+	Img.type3_1_1.src = '/client/img/ufos/lvl 2 cannon/1.png';
+	Img.type3_2_1 = new Image();
+	Img.type3_2_1.src = '/client/img/ufos/lvl 2 cannon/2.png';
+	Img.type3_3_1 = new Image();
+	Img.type3_3_1.src = '/client/img/ufos/lvl 2 cannon/3.png';
+	
+	
+	
+	Img.type3_1_2 = new Image();
+	Img.type3_1_2.src = '/client/img/ufos/lvl 3 cannon/1.png';
+	Img.type3_2_2 = new Image();
+	Img.type3_2_2.src = '/client/img/ufos/lvl 3 cannon/2.png';
+	Img.type3_3_2 = new Image();
+	Img.type3_3_2.src = '/client/img/ufos/lvl 3 cannon/3.png';
+	
+	
+	
+	Img.type3_1_3 = new Image();
+	Img.type3_1_3.src = '/client/img/ufos/lvl 4 cannon/1.png';
+	Img.type3_2_3 = new Image();
+	Img.type3_2_3.src = '/client/img/ufos/lvl 4 cannon/2.png';
+	Img.type3_3_3 = new Image();
+	Img.type3_3_3.src = '/client/img/ufos/lvl 4 cannon/3.png';
+	////////////////////////
+	
+	
+	
+	
+	////////////////////////       4
+	Img.type4_1 = new Image();
+	Img.type4_1.src = '/client/img/ufos/lvl 1 bully/1.png';
+	Img.type4_2 = new Image();
+	Img.type4_2.src = '/client/img/ufos/lvl 1 bully/2.png';
+	Img.type4_3 = new Image();
+	Img.type4_3.src = '/client/img/ufos/lvl 1 bully/3.png';
+	
+	
+	
+	Img.type4_1_1 = new Image();
+	Img.type4_1_1.src = '/client/img/ufos/lvl 2 bully/1.png';
+	Img.type4_2_1 = new Image();
+	Img.type4_2_1.src = '/client/img/ufos/lvl 2 bully/2.png';
+	Img.type4_3_1 = new Image();
+	Img.type4_3_1.src = '/client/img/ufos/lvl 2 bully/3.png';
+	
+	
+	
+	Img.type4_1_2 = new Image();
+	Img.type4_1_2.src = '/client/img/ufos/lvl 3 bully/1.png';
+	Img.type4_2_2 = new Image();
+	Img.type4_2_2.src = '/client/img/ufos/lvl 3 bully/2.png';
+	Img.type4_3_2 = new Image();
+	Img.type4_3_2.src = '/client/img/ufos/lvl 3 bully/3.png';
+	
+	
+	
+	Img.type4_1_3 = new Image();
+	Img.type4_1_3.src = '/client/img/ufos/lvl 4 bully/1.png';
+	Img.type4_2_3 = new Image();
+	Img.type4_2_3.src = '/client/img/ufos/lvl 4 bully/2.png';
+	Img.type4_3_3 = new Image();
+	Img.type4_3_3.src = '/client/img/ufos/lvl 4 bully/3.png';
+	////////////////////////
+	
+	
+	
+	Img.update1 = new Image();
+	Img.update1.src = '/client/img/updates/ufo1.png';
+	Img.update2 = new Image();
+	Img.update2.src = '/client/img/updates/ufo2.png';
+	Img.update3 = new Image();
+	Img.update3.src = '/client/img/updates/ufo3.png';
+	Img.update1_1 = new Image();
+	Img.update1_1.src = '/client/img/updates/ufo1.1.png';
+	Img.update1_2 = new Image();
+	Img.update1_2.src = '/client/img/updates/ufo1.2.png';
+	Img.update1_3 = new Image();
+	Img.update1_3.src = '/client/img/updates/ufo1.3.png';
+	Img.update2_1 = new Image();
+	Img.update2_1.src = '/client/img/updates/ufo2.1.png';
+	Img.update2_2 = new Image();
+	Img.update2_2.src = '/client/img/updates/ufo2.2.png';
+	Img.update2_3 = new Image();
+	Img.update2_3.src = '/client/img/updates/ufo2.3.png';
+	Img.update3_1 = new Image();
+	Img.update3_1.src = '/client/img/updates/ufo3.1.png';
+	Img.update3_2 = new Image();
+	Img.update3_2.src = '/client/img/updates/ufo3.2.png';
+	Img.update3_3 = new Image();
+	Img.update3_3.src = '/client/img/updates/ufo3.3.png';
+	
+	
+	
+	
+
+	Img.mapLevel1 = new Image();
+	Img.mapLevel1.src = '/client/img/maps/stars.png';
+	
+	
+	Img.bullet1 = new Image();
+	Img.bullet1.src = '/client/img/bullets/1.png';
+	Img.bullet2 = new Image();
+	Img.bullet2.src = '/client/img/bullets/2.png';
+	Img.bullet3 = new Image();
+	Img.bullet3.src = '/client/img/bullets/3.png';
+	Img.bullet4 = new Image();
+	Img.bullet4.src = '/client/img/bullets/4.png';
+	Img.bullet4_1 = new Image();
+	Img.bullet4_1.src = '/client/img/bullets/4-1.png';
+	Img.bullet4_2 = new Image();
+	Img.bullet4_2.src = '/client/img/bullets/4-2.png';
+	Img.gift1 = new Image();
+	Img.gift1.src = '/client/img/gifts/hp.png';
+	Img.gift2 = new Image();
+	Img.gift2.src = '/client/img/gifts/shield.png';
+	Img.gift3 = new Image();
+	Img.gift3.src = '/client/img/gifts/boost.png';
+	var ctxStyle = document.getElementById('ctx');
+    var gpsStyle = document.getElementById('gps');
+    var ctx = document.getElementById("ctx").getContext("2d");
+    var gps = document.getElementById("gps").getContext("2d");
+    ctx.font = '30px Arial';
+	var mapXrange = 0;
+	var mapYrange = 0;
+    var selfId = null;
+    var selfParty = null;
+	var updateUfo = false;
+	var preventShowAgain = false;
+	var currentX = 0;
+	var currentY = 0;
+	var myMx = 0;
+	var myMy = 0;
+	var leaderBoard = [];
+	var leaderBoard1 = [];
+	setInterval(function(){
+		Kaboom.list = [];
+	},1000);
+	//partyCodeGenerator = Math.random() + "";
+	//partyCode.value = partyCodeGenerator.substring(0, 7);
+	//Player.list[selfId] this will be the player we are controlling
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	
+	
+	
+	
+	
+///////////////////////////////////////////Sign In and Sign up/////////////////////////////////////////////////////////////
+
+	
+    signDivSignIn.onclick = function(){
+	if(signDivUsername.value.trim() != '' && signDivUsername.value.length <= 10 && signDivUsername.disabled == false)
+	{
+		var role = 0;
+		var team = 1;  
+		if (document.getElementById("autoRadio").checked == true) {
+			team = 0;              
+		}
+		if (document.getElementById("protectorsRadio").checked == true) {
+			team = 1;              
+		}   
+		if (document.getElementById("rebelsRadio").checked == true) {
+			team = 2;              
+		}  
+		if (document.getElementById("tankRadio").checked == true) {
+			role = 1;              
+		}                                                        
+		else if (document.getElementById("gunnerRadio").checked == true) {
+			role = 2;              
+		}
+		else if (document.getElementById("cannonRadio").checked == true) {
+			role = 3;              
+		}
+		else if (document.getElementById("bullyRadio").checked == true) {
+			role = 4;              
+		}
+		if(isReset == false)
+		{
+		Kaboom.list = [];
+		signDivSignIn.disabled = true;
+		signDivSignIn.style.color = "gray";
+		signDivSignIn.innerHTML = "Wait...";
+		socket.emit('signIn',{username:signDivUsername.value,role:role,team:team});//{username:signDivUsername.value,password:signDivPassword.value}
+		}
+		else
+		{
+		Kaboom.list = [];
+		headerDiv.innerHTML = "ufowars.io";
+		signDivSignIn.disabled = true;
+		signDivSignIn.style.color = "gray";
+		signDivSignIn.innerHTML = "Wait...";
+		socket.emit('reset',{username:signDivUsername.value,role:role,team:team});
+		isReset == false;
+		}
+	}
+    }
+    socket.on('signInResponse',function(data){
+        if(data.success){
+            signDiv.style.display = 'none';
+            gameDiv.style.display = 'inline-block';
+        } 
+		else
+		{
+            alert("Sign in unsuccessul.");
+			if(signDivSignIn.disabled = true)//after passing
+			{
+				signDivSignIn.style.color = "#ffffff";
+				signDivSignIn.innerHTML = "play";
+				signDivSignIn.disabled = false;
+			}
+		}
+    });
+    socket.on('resetResponse',function(data){
+        if(data.success){
+            signDiv.style.display = 'none';
+            gameDiv.style.display = 'inline-block';
+        } 
+		else
+		{
+            alert("Sign in unsuccessul.");
+			if(signDivSignIn.disabled = true)//after passing
+			{
+				signDivSignIn.style.color = "#ffffff";
+				signDivSignIn.innerHTML = "play";
+				signDivSignIn.disabled = false;
+			}
+		}
+    });
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+ 
+  
+ 
+///////////////////////////////////////////Chat///////////////////////////////////////////////////////////////////
+    //chat
+    var chatText = document.getElementById('chat-text');
+    var chatInput = document.getElementById('chat-input');
+    var chatForm = document.getElementById('chat-form');
+   
+    socket.on('addToChat',function(data){
+			chatText.innerHTML += '<div>' + data + '</div>';
+			chatText.scrollTop = chatText.scrollHeight;
+			
+			chatText.style.opacity = 1;
+			setTimeout(function(){ 
+			chatText.style.opacity = 0.2;
+			}, 5000);
+    });
+    socket.on('evalAnswer',function(data){
+        //console.log(data);
+    });
+   
+   
+    chatForm.onsubmit = function(e){
+        e.preventDefault();
+        if(chatInput.value.trim() !== '')
+		{
+			if(chatInput.value.length <= 100)
+			{
+					socket.emit('sendMsgToServer',chatInput.value);
+					chatInput.value = ''; 
+			}
+		}     
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
+   
+    
+	
+	
+///////////////////////////////////////////Player Constructor/////////////////////////////////////////////////////////
+    var Player = function(initPack){//player constructor
+        var self = {};
+        self.id = initPack.id;
+        self.name = initPack.name;
+		self.party = initPack.party;
+		self.role = initPack.role;
+        self.x = initPack.x;
+        self.y = initPack.y;
+        self.hp = initPack.hp;
+        self.hpMax = initPack.hpMax;
+        self.score = initPack.score;
+		self.bonusIsEnable = initPack.bonusIsEnable;
+        self.angle = 0;
+		self.ufo = initPack.ufo;
+		self.ufoToDraw = "";
+		self.rank = 0;
+		self.update1Allow;
+		self.update2Allow;
+		self.update3Allow;
+		self.secondUpdateAllow;
+		self.bonus = "";
+		self.bonusIsEnable = false;
+        self.isDead = false; 
+		self.whoKilled = '';
+		self.draw = function(){	//drawing function
+		try{
+			
+			
+			if(self.isDead == true && self.id == selfId)//after destroying
+			{
+			isReset = true;
+			endingReason = "Your UFO is destroyed!";
+			headerDiv.style.color = "#ed1e1e";
+			headerDiv.style.fontSize = "80px";
+			headerDiv.style.fontWeight = "bold";
+			headerDiv.innerHTML = endingReason;
+            gameDiv.style.display = 'none';
+			signDiv.style.display = 'inline-block';
+			signDivSignIn.disabled = true;
+			signDivSignIn.style.color = "gray";
+			signDivSignIn.innerHTML = "Wait...";
+			if(signDivSignIn.disabled = true)//after passing
+				{
+					//headerDiv.style.color = "#ddd3ff";
+					setTimeout(function(){
+					headerDiv.style.fontSize = "40px";
+					headerDiv.style.fontWeight = "normal";
+					signDivSignIn.style.color = "black";
+					signDivSignIn.innerHTML = "<span>Respawn</span>";
+					signDivSignIn.disabled = false;
+					},5000);
+				}
+			}
+			
+			
+			
+		
+			self.whoKilledShow = function(){//who killed show
+				if(self.id == selfId)//show who killed for 5 seconds on chat console
+				{
+					if(self.whoKilled != '')
+					{
+						chatText.innerHTML += "<div style='color:red;font-size:20px;font-weight:bold'>You killed " + self.whoKilled + "</div>";
+						chatText.scrollTop = chatText.scrollHeight;
+						
+						chatText.style.opacity = 1;
+						setTimeout(function(){ 
+						chatText.style.opacity = 0.2;
+						}, 5000);
+					}
+					lastKill = self.whoKilled;
+				}
+			}
+			self.leaderBoardsShow = function(){//Leader boards shpw
+					topTenShowDiv.innerHTML = '';//top 10 for protectors
+					for(var i in Player.list)
+					{
+						if(Player.list[i].party == 1)
+						leaderBoard.push([Player.list[i].name, Player.list[i].score]);
+						//leaderBoard.push('<br\>'+Player.list[i].score+':'+Player.list[i].name);
+					}
+						leaderBoard.sort(function(a, b) {
+							return a[1] - b[1];
+						});
+						leaderBoard.reverse();
+						topTenShowDiv.innerHTML = leaderBoard.join("<br\>");
+						leaderBoard = [];
+						
+						
+				topTenShowDiv1.innerHTML = '';//top ten for rebels
+				for(var i in Player.list)
+				{
+					if(Player.list[i].party == 2)
+					leaderBoard1.push([Player.list[i].name, Player.list[i].score]);
+				}
+					leaderBoard1.sort(function(a, b) {
+						return a[1] - b[1];
+					});
+					leaderBoard1.reverse();
+					topTenShowDiv1.innerHTML = leaderBoard1.join("<br\>");
+					leaderBoard1 = [];
+			}
+			
+			
+			
+			
+			
+			self.gpsMapShow = function(){//GPS map show
+			gpsStyle.width = 250;
+			gpsStyle.height = 150;
+			var gpsWidth = mapXrange/gpsStyle.width;
+			var gpsHeight = mapYrange/gpsStyle.height;
+			var xInGps = Player.list[selfId].x/gpsWidth;
+			var yInGps = Player.list[selfId].y/gpsHeight;
+			
+			
+			
+			gps.save();
+			gps.clearRect(0, 0, gpsStyle.width, gpsStyle.height);
+			gps.beginPath();
+			gps.font = "20px Arial";
+			gps.fillStyle = 'white';
+			gps.fillText("map",100,15);
+			gps.arc(xInGps, yInGps, 5, 0, 2 * Math.PI, false);
+			if(Player.list[selfId].role == 1)
+			gps.fillStyle = 'green';
+			else if(Player.list[selfId].role == 2)
+			gps.fillStyle = 'blue';
+			else if(Player.list[selfId].role == 3)
+			gps.fillStyle = 'red';
+			else if(Player.list[selfId].role == 4)
+			gps.fillStyle = 'yellow';
+			gps.fill();
+			gps.lineWidth = 3;
+			gps.strokeStyle = 'black';
+			gps.stroke();
+			
+			
+			for(var i in Earth.list)
+			{
+				xInGps = Earth.list[i].x/gpsWidth;
+				yInGps = Earth.list[i].y/gpsHeight;
+					gps.save();
+					gps.beginPath();
+					gps.arc(xInGps, yInGps, 10, 0, 2 * Math.PI, false);
+					if(Earth.list[i].id == 1)
+					gps.fillStyle = 'blue';
+					if(Earth.list[i].id == 2)
+					gps.fillStyle = 'red';
+					gps.fill();
+					gps.lineWidth = 3;
+					gps.strokeStyle = 'white';
+					gps.stroke();
+					gps.fillStyle = 'white';
+					gps.font="12px Arial";
+					gps.color="white";
+					if(Earth.list[i].id == 1)
+					gps.fillText("Earth",xInGps-15,yInGps-15);
+					if(Earth.list[i].id == 2)
+					gps.fillText("Trappist-1",xInGps-30,yInGps-15);
+					gps.restore();
+			}
+			gps.restore();
+			}
+			
+			self.whoKilledShow();
+			self.leaderBoardsShow();
+			self.gpsMapShow();
+			
+			//this will choose their ufo pic
+			if(self.ufo == 1 && self.role == 1)
+			self.ufoToDraw = Img.type1;
+			if(self.ufo == 2 && self.role == 2)
+			self.ufoToDraw = Img.type2;
+			if(self.ufo == 3 && self.role == 3)
+			self.ufoToDraw = Img.type3;
+			if(self.ufo == 4 && self.role == 4)
+			self.ufoToDraw = Img.type4;
+			
+			
+			if(self.ufo == "ufoCase1" && self.role == 1)
+			self.ufoToDraw = Img.type1_1;
+			if(self.ufo == "ufoCase2" && self.role == 1)
+			self.ufoToDraw = Img.type1_2;
+			if(self.ufo == "ufoCase3" && self.role == 1)
+			self.ufoToDraw = Img.type1_3;
+			
+			
+			
+			if(self.ufo == "ufoCase1.1" && self.role == 1)
+			self.ufoToDraw = Img.type1_1_1;
+			if(self.ufo == "ufoCase2.1" && self.role == 1)
+			self.ufoToDraw = Img.type1_2_1;
+			if(self.ufo == "ufoCase3.1" && self.role == 1)
+			self.ufoToDraw = Img.type1_3_1;
+			
+			
+			
+			if(self.ufo == "ufoCase1.2" && self.role == 1)
+			self.ufoToDraw = Img.type1_1_2;
+			if(self.ufo == "ufoCase2.2" && self.role == 1)
+			self.ufoToDraw = Img.type1_2_2;
+			if(self.ufo == "ufoCase3.2" && self.role == 1)
+			self.ufoToDraw = Img.type1_3_2;
+			
+			
+			
+			if(self.ufo == "ufoCase1.3" && self.role == 1)
+			self.ufoToDraw = Img.type1_1_3;
+			if(self.ufo == "ufoCase2.3" && self.role == 1)
+			self.ufoToDraw = Img.type1_2_3;
+			if(self.ufo == "ufoCase3.3" && self.role == 1)
+			self.ufoToDraw = Img.type1_3_3;
+			
+			
+			
+			if(self.ufo == "ufoCase1" && self.role == 2)
+			self.ufoToDraw = Img.type2_1;
+			if(self.ufo == "ufoCase2" && self.role == 2)
+			self.ufoToDraw = Img.type2_2;
+			if(self.ufo == "ufoCase3" && self.role == 2)
+			self.ufoToDraw = Img.type2_3;
+			
+			
+			if(self.ufo == "ufoCase1.1" && self.role == 2)
+			self.ufoToDraw = Img.type2_1_1;
+			if(self.ufo == "ufoCase2.1" && self.role == 2)
+			self.ufoToDraw = Img.type2_2_1;
+			if(self.ufo == "ufoCase3.1" && self.role == 2)
+			self.ufoToDraw = Img.type2_3_1;
+			
+			
+			if(self.ufo == "ufoCase1.2" && self.role == 2)
+			self.ufoToDraw = Img.type2_1_2;
+			if(self.ufo == "ufoCase2.2" && self.role == 2)
+			self.ufoToDraw = Img.type2_2_2;
+			if(self.ufo == "ufoCase3.2" && self.role == 2)
+			self.ufoToDraw = Img.type2_3_2;
+			
+			
+			if(self.ufo == "ufoCase1.3" && self.role == 2)
+			self.ufoToDraw = Img.type2_1_3;
+			if(self.ufo == "ufoCase2.3" && self.role == 2)
+			self.ufoToDraw = Img.type2_2_3;
+			if(self.ufo == "ufoCase3.3" && self.role == 2)
+			self.ufoToDraw = Img.type2_3_3;
+			
+			
+			
+			
+			if(self.ufo == "ufoCase1" && self.role == 3)
+			self.ufoToDraw = Img.type3_1;
+			if(self.ufo == "ufoCase2" && self.role == 3)
+			self.ufoToDraw = Img.type3_2;
+			if(self.ufo == "ufoCase3" && self.role == 3)
+			self.ufoToDraw = Img.type3_3;
+			
+			
+			
+			if(self.ufo == "ufoCase1.1" && self.role == 3)
+			self.ufoToDraw = Img.type3_1_1;
+			if(self.ufo == "ufoCase2.1" && self.role == 3)
+			self.ufoToDraw = Img.type3_2_1;
+			if(self.ufo == "ufoCase3.1" && self.role == 3)
+			self.ufoToDraw = Img.type3_3_1;
+			
+			
+			
+			if(self.ufo == "ufoCase1.2" && self.role == 3)
+			self.ufoToDraw = Img.type3_1_2;
+			if(self.ufo == "ufoCase2.2" && self.role == 3)
+			self.ufoToDraw = Img.type3_2_2;
+			if(self.ufo == "ufoCase3.2" && self.role == 3)
+			self.ufoToDraw = Img.type3_3_2;
+			
+			
+			
+			if(self.ufo == "ufoCase1.3" && self.role == 3)
+			self.ufoToDraw = Img.type3_1_3;
+			if(self.ufo == "ufoCase2.3" && self.role == 3)
+			self.ufoToDraw = Img.type3_2_3;
+			if(self.ufo == "ufoCase3.3" && self.role == 3)
+			self.ufoToDraw = Img.type3_3_3;
+			//
+			
+			
+			
+			
+			if(self.ufo == "ufoCase1" && self.role == 4)
+			self.ufoToDraw = Img.type4_1;
+			if(self.ufo == "ufoCase2" && self.role == 4)
+			self.ufoToDraw = Img.type4_2;
+			if(self.ufo == "ufoCase3" && self.role == 4)
+			self.ufoToDraw = Img.type4_3;
+			
+			
+			
+			if(self.ufo == "ufoCase1.1" && self.role == 4)
+			self.ufoToDraw = Img.type4_1_1;
+			if(self.ufo == "ufoCase2.1" && self.role == 4)
+			self.ufoToDraw = Img.type4_2_1;
+			if(self.ufo == "ufoCase3.1" && self.role == 4)
+			self.ufoToDraw = Img.type4_3_1;
+			
+			
+			
+			if(self.ufo == "ufoCase1.2" && self.role == 4)
+			self.ufoToDraw = Img.type4_1_2;
+			if(self.ufo == "ufoCase2.2" && self.role == 4)
+			self.ufoToDraw = Img.type4_2_2;
+			if(self.ufo == "ufoCase3.2" && self.role == 4)
+			self.ufoToDraw = Img.type4_3_2;
+			
+			
+			
+			if(self.ufo == "ufoCase1.3" && self.role == 4)
+			self.ufoToDraw = Img.type4_1_3;
+			if(self.ufo == "ufoCase2.3" && self.role == 4)
+			self.ufoToDraw = Img.type4_2_3;
+			if(self.ufo == "ufoCase3.3" && self.role == 4)
+			self.ufoToDraw = Img.type4_3_3;
+			
+			
+			
+			var x = self.x - Player.list[selfId].x + WIDTH/2;
+			var y = self.y - Player.list[selfId].y + HEIGHT/2;
+			currentX = WIDTH/2;
+			currentY = HEIGHT/2;
+			//var width = self.ufoToDraw.width*2;
+			//var height = self.ufoToDraw.height*2;
+			
+			
+			
+			//this will draw shield if shield is on
+			if(self.bonus == "shield" && self.bonusIsEnable == true)//this will draw the shield blob
+			{
+				drawShield(x,y);
+			}
+			
+			
+			//this will draw the player as their party , friendly or enemy
+			if(self.id != selfId)
+			{
+				if(self.party != selfParty)
+					drawOpponentDetails(self.name,x,y,self.hp,self.hpMax,self.score,false);
+				else
+					drawOpponentDetails(self.name,x,y,self.hp,self.hpMax,self.score,true);
+			}
+			else//this will draw self will the circle consol
+			{
+				selfParty = self.party;
+				if(self.isDead != true)
+				{
+				drawCircleConsole(self.name,x,y,self.hp,self.hpMax,self.score,self.rank,self.updateAllow,self.secondUpdateAllow,self.bonus);
+				}
+				if(self.isDead == true)
+				{
+					afterDeath.style.display = 'block';
+				}
+				else
+				{
+						afterDeath.style.display = 'none'
+				}
+			}
+			new EngineFire(self.x,self.y);//draw the engine fire
+			drawRotatedImage(self.ufoToDraw,x,y,self.angle); //draw self ufo
+			}
+			catch(err){
+				alert("Connection lost");
+				location.reload();
+			}
+        }
+       
+        Player.list[self.id] = self;//set self to the list
+       
+        return self;
+    }
+    Player.list = {};//list of players got from server
+	
+	
+	
+	
+var TO_RADIANS = Math.PI/180; //radianse maker
+function drawRotatedImage(image, x, y, angle) { //it will draw a rotated image at the angle it gets
+ 
+	// save the current co-ordinate system 
+	// before we screw with it
+	ctx.save(); 
+ 
+	// move to the middle of where we want to draw our image
+	ctx.translate(x, y);
+ 
+	// rotate around that point, converting our 
+	// angle from degrees to radians 
+	ctx.rotate(angle * TO_RADIANS);
+ 
+	// draw it up and to the left by half the width
+	// and height of the image 
+	ctx.drawImage(image, -(image.width/2), -(image.height/2));
+ 
+	// and restore the co-ords to how they were when we began
+	ctx.restore(); 
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       
+	
+	
+	
+       
+///////////////////////////////////////////Bullet Constructor/////////////////////////////////////////////////////////
+    var Bullet = function(initPack){//bullet construvtor
+        var self = {};
+        self.id = initPack.id;
+        self.x = initPack.x;
+        self.y = initPack.y;
+        self.angle = 0;
+        self.bulletKind = initPack.bKind;
+        self.bulletToDraw = "";
+        self.pForm = initPack.pForm;
+        self.draw = function(){    //drawing bullets
+		
+			var x = self.x - Player.list[selfId].x + WIDTH/2;
+			var y = self.y - Player.list[selfId].y + HEIGHT/2;
+		
+			//shoose bullet pic
+			if(self.bulletKind == 1)
+			self.bulletToDraw = Img.bullet1;
+			if(self.bulletKind == 2)
+			self.bulletToDraw = Img.bullet2;
+			if(self.bulletKind == 3)
+			self.bulletToDraw = Img.bullet3;
+			if(self.bulletKind == 4)
+			self.bulletToDraw = Img.bullet4;
+			if(self.bulletKind == 4 && self.pForm == "ufoCase1" || self.bulletKind == 4 && self.pForm == "ufoCase1.1" || self.bulletKind == 4 && self.pForm == "ufoCase1.2" || self.bulletKind == 4 && self.pForm == "ufoCase1.3")
+			self.bulletToDraw = Img.bullet4;
+			if(self.bulletKind == 4 && self.pForm == "ufoCase2" || self.bulletKind == 4 && self.pForm == "ufoCase2.1" || self.bulletKind == 4 && self.pForm == "ufoCase2.2" || self.bulletKind == 4 && self.pForm == "ufoCase2.3")
+			self.bulletToDraw = Img.bullet4_1;
+			if(self.bulletKind == 4 && self.pForm == "ufoCase3" || self.bulletKind == 4 && self.pForm == "ufoCase3.1" || self.bulletKind == 4 && self.pForm == "ufoCase3.2" || self.bulletKind == 4 && self.pForm == "ufoCase3.3")
+			self.bulletToDraw = Img.bullet4_2;
+			
+			
+			drawRotatedImage(self.bulletToDraw,x,y,self.angle); //calling drawRotatedImage function
+        }
+       
+        Bullet.list[self.id] = self;       
+        return self;
+    }
+    Bullet.list = {};
+   
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	
+	
+	
+
+///////////////////////////////////////////Engine fire Constructor/////////////////////////////////////////////////////////
+    var EngineFire = function(x,y){//stone cunstructor
+        var self = {};
+        self.id = Math.random();
+        self.x = x;
+        self.y = y;
+        self.radius = 2;
+        self.timer = 0;
+        self.range = 3;
+        self.draw = function(){   //it will draw circles for fire in diffrent colors and x and y
+
+			var x = self.x - Player.list[selfId].x + WIDTH/2;
+			var y = self.y - Player.list[selfId].y + HEIGHT/2;
+
+		
+			ctx.beginPath(); 
+			ctx.arc(x, y, self.radius, 0, 5 * Math.PI, false);
+			ctx.fillStyle = 'red';
+			ctx.fill();
+			
+			ctx.beginPath(); 
+			ctx.arc(x-7, y, self.radius, 0, 2 * Math.PI, false);
+			ctx.fillStyle = 'red';
+			ctx.fill();
+			
+			ctx.beginPath(); 
+			ctx.arc(x+7, y, self.radius, 0, 2 * Math.PI, false);
+			ctx.fillStyle = 'yellow';
+			ctx.fill();
+			
+			
+			ctx.beginPath(); 
+			ctx.arc(x, y-7, self.radius, 0, 2 * Math.PI, false);
+			ctx.fillStyle = 'orange';
+			ctx.fill();
+			
+			ctx.beginPath(); 
+			ctx.arc(x, y+7, self.radius, 0, 2 * Math.PI, false);
+			ctx.fillStyle = 'orange';
+			ctx.fill();
+        if(self.timer++ > self.range) //this will tell us when to remove the bullet(by time)
+            delete EngineFire.list[self.id];
+        }
+       
+        EngineFire.list[self.id] = self;       
+        return self;
+    }
+    EngineFire.list = {};
+	
+			//new EngineFire(self.x,self.y); use this anywhere to draw Engine fire
+	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+///////////////////////////////////////////Stone Constructor/////////////////////////////////////////////////////////
+    var Stone = function(initPack){//stone cunstructor
+        var self = {};
+        self.id = initPack.id;
+        self.type = initPack.type;
+		self.color = initPack.color;
+        self.x = initPack.x;
+        self.y = initPack.y;
+        self.radius = initPack.radius;
+        self.hp = initPack.hp;
+        self.score = initPack.score;
+		self.isOut = false;
+		self.angle = Math.floor(Math.random() * 359 + 1);
+        self.draw = function(){   //it will draw stones
+			try
+			{
+			if(self.radius <= 10)
+				self.radius = 12;
+			
+			
+			
+		
+			var x = self.x - Player.list[selfId].x + WIDTH/2;
+			var y = self.y - Player.list[selfId].y + HEIGHT/2;
+			
+			
+			ctx.save();
+			ctx.beginPath(); 
+			ctx.arc(x, y, self.radius, 0, 2 * Math.PI, false);
+			ctx.fillStyle = self.color;
+			ctx.fill();
+			ctx.lineWidth = 5;
+			ctx.strokeStyle = shadeColor1(self.color, 30);
+			//ctx.strokeStyle = 'red';
+			ctx.stroke(); 
+			ctx.restore();
+			
+			}
+			catch(err)
+			{
+				self.radius = 15;
+				
+				
+				var x = self.x - Player.list[selfId].x + WIDTH/2;
+				var y = self.y - Player.list[selfId].y + HEIGHT/2;
+				
+				
+				ctx.save();
+				ctx.beginPath(); 
+				ctx.arc(x, y, self.radius, 0, 2 * Math.PI, false);
+				ctx.fillStyle = self.color;
+				ctx.fill();
+				ctx.lineWidth = 5;
+				ctx.strokeStyle = shadeColor1(self.color, 30);
+				//ctx.strokeStyle = 'red';
+				ctx.stroke(); 
+				ctx.restore();
+			}
+			
+			
+        }
+       
+        Stone.list[self.id] = self;       
+        return self;
+    }
+    Stone.list = {};
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	
+	
+	
+	
+	
+///////////////////////////////////////////Gift Constructor/////////////////////////////////////////////////////////
+    var Gift = function(initPack){//Gift cunstructor
+        var self = {};
+        self.id = initPack.id;
+        self.x = initPack.x;
+        self.y = initPack.y;
+        self.contains = initPack.contains;
+		self.angle = Math.floor(Math.random() * 359 + 1);
+        self.draw = function(){   //it will draw gifts
+			try
+			{
+			self.gift = Img.gift1;
+		
+			var x = self.x - Player.list[selfId].x + WIDTH/2;
+			var y = self.y - Player.list[selfId].y + HEIGHT/2;
+
+			if(self.contains === "hp")
+			{
+			self.gift = Img.gift1;
+			drawRotatedImage(self.gift,x,y,self.angle); //calling drawRotatedImage function
+			}
+			else if(self.contains === "shield")
+			{
+			self.gift = Img.gift2;
+			drawRotatedImage(self.gift,x,y,self.angle); //calling drawRotatedImage function
+			}
+			else if(self.contains === "boost")
+			{
+			self.gift = Img.gift3;
+			drawRotatedImage(self.gift,x,y,self.angle); //calling drawRotatedImage function
+			}
+			else if(self.contains === "nothing")
+			{
+			self.gift = "";
+			}
+			
+
+			//ctx.beginPath(); 
+			//ctx.arc(x, y, 50, 0, 2 * Math.PI, false);
+			//ctx.fillStyle = 'brown';
+			//ctx.fill();
+			//ctx.lineWidth = 5;
+			//ctx.strokeStyle = 'blue';
+			//ctx.stroke(); 
+			
+			
+			}
+			catch(err)
+			{
+			}
+        }
+       
+        Gift.list[self.id] = self;       
+        return self;
+    }
+    Gift.list = {};
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+	
+	
+	
+	
+	
+	
+
+	
+
+///////////////////////////////////////////Earth Constructor/////////////////////////////////////////////////////////
+    var Earth = function(initPack){//Earth cunstructor
+        var self = {};
+		self.id = initPack.id;
+		self.x = initPack.x;
+		self.y = initPack.y;
+		self.hpMax = initPack.hpMax;
+		self.hp = initPack.hp;
+		self.radius = initPack.radius;
+		self.isPassed = false;
+		self.isDestroyed = false;
+        self.draw = function(){   //it will draw Earth
+
+		try
+		{
+			if(self.isPassed == true)
+			{
+			isReset = true;
+			endingReason = "Trappist Protectors are won";
+			headerDiv.style.color = "#e83e82";
+			headerDiv.style.fontSize = "80px";
+			headerDiv.style.fontWeight = "bold";
+			headerDiv.innerHTML = endingReason;
+            gameDiv.style.display = 'none';
+			
+			//animationer
+			
+			animator.style.display = 'inline-block';
+			animationer1.style.display = 'inline-block';
+			setTimeout(function(){ 
+			animationer1.style.display = 'none';
+			animationer2.style.display = 'inline-block';
+			}, 1000);
+			setTimeout(function(){ 
+			animationer2.style.display = 'none';
+			animationer3.style.display = 'inline-block';
+			}, 2000);
+			setTimeout(function(){ 
+				animationer3.style.display = 'none';
+			animator.style.display = 'none';
+				signDiv.style.display = 'inline-block';
+			}, 5000);
+			
+			
+			signDivSignIn.disabled = true;
+			signDivSignIn.style.color = "gray";
+			signDivSignIn.innerHTML = "Wait...";
+			if(signDivSignIn.disabled = true)//after passing
+			{
+				//headerDiv.style.color = "#ddd3ff";
+				setTimeout(function(){
+				headerDiv.style.fontSize = "40px";
+				headerDiv.style.fontWeight = "normal";
+				signDivSignIn.style.color = "black";
+				signDivSignIn.innerHTML = "<span>Next round</span>";
+				signDivSignIn.disabled = false;
+				},10000);
+			}
+			}
+			if(self.isDestroyed == true)//after destroying
+			{
+			isReset = true;
+			endingReason = "Earth protectors are won";
+			headerDiv.style.color = "#1eed4a";
+			headerDiv.style.fontSize = "80px";
+			headerDiv.style.fontWeight = "bold";
+			headerDiv.innerHTML = endingReason;
+            gameDiv.style.display = 'none';
+			
+			
+			
+			
+			//animationer
+			
+			animator.style.display = 'inline-block';
+			animationer1.style.display = 'inline-block';
+			setTimeout(function(){ 
+			animationer1.style.display = 'none';
+			animationer4.style.display = 'inline-block';
+			}, 1000);
+			setTimeout(function(){ 
+			animationer4.style.display = 'none';
+			animationer5.style.display = 'inline-block';
+			}, 2000);
+			setTimeout(function(){ 
+				animationer5.style.display = 'none';
+			animator.style.display = 'none';
+				signDiv.style.display = 'inline-block';
+			}, 5000);
+			
+			
+			signDivSignIn.disabled = true;
+			signDivSignIn.style.color = "gray";
+			signDivSignIn.innerHTML = "Wait...";
+				if(signDivSignIn.disabled = true)
+				{
+					setTimeout(function(){
+					headerDiv.style.fontSize = "40px";
+					headerDiv.style.fontWeight = "normal";
+					signDivSignIn.style.color = "black";
+					signDivSignIn.innerHTML = "<span>Next round</span>";
+					signDivSignIn.disabled = false;
+					},10000);
+				}
+			}
+
+		
+
+			var x = self.x - Player.list[selfId].x + WIDTH/2;
+			var y = self.y - Player.list[selfId].y + HEIGHT/2;
+
+		if(self.id == 1)
+			drawRotatedImage(Img.earth,x,y,0); //calling drawRotatedImage function
+		if(self.id == 2)
+			drawRotatedImage(Img.earth1,x,y,0); //calling drawRotatedImage function
+			
+			
+			//Earth hp
+			var hpPercentage = self.hp / self.hpMax;      //this will go t hp class
+			
+			var hpColorForEarth = '#42ff48';
+			// Change color
+			if (self.hp <= self.hpMax/1.5 && self.hp > self.hpMax/2)
+			{
+				hpColorForEarth = '#dcf42a';
+			}  
+			else if (self.hp <= self.hpMax/2 && self.hp > self.hpMax/3)
+			{
+				hpColorForEarth = '#f48028';
+			}
+			else if (self.hp <= self.hpMax/3)
+			{
+				hpColorForEarth = '#f42727';
+			}
+			
+			if(self.id == 1)
+			{
+				ctx.save();
+				ctx.beginPath();
+				ctx.globalAlpha = 0.8;
+				ctx.fillStyle = 'white';
+				ctx.fillRect((WIDTH/3)-100, 5, 200, 20);
+				ctx.fillStyle = hpColorForEarth;
+				ctx.fillRect((WIDTH/3)-100, 10, hpPercentage*200, 10);
+				drawText((WIDTH/3)-20,20,"Earth hp",15,"#6da0f2",0); 
+				ctx.fill();
+				ctx.restore();
+			}
+			if(self.id == 2)
+			{
+				ctx.save();
+				ctx.beginPath();
+				ctx.globalAlpha = 0.8;
+				ctx.fillStyle = 'white';
+				ctx.fillRect((WIDTH/1.5)-100, 5, 200, 20);
+				ctx.fillStyle = hpColorForEarth;
+				ctx.fillRect((WIDTH/1.5)-100, 10, hpPercentage*200, 10);
+				drawText((WIDTH/1.5)-30,20,"Trappist hp",15,"#f16d6d",0); 
+				ctx.fill();
+				ctx.restore();
+			}
+			
+			}
+			catch(err)
+			{
+			}
+			
+			
+        }
+       
+        Earth.list[self.id] = self;       
+        return self;
+    }
+    Earth.list = {};
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+
+	
+	
+	
+	
+	
+///////////////////////////////////////////Kaboom Constructor/////////////////////////////////////////////////////////
+    var Kaboom = function(x,y,angle){//Gift cunstructor
+        self.id = Math.random();
+        self.x = x;
+        self.y = y;
+		self.angle = angle;
+        self.draw = function(){   //it will show Kabooms
+		
+		try
+		{
+		var x1 = self.x - Player.list[selfId].x + WIDTH/2;
+		var y1 = self.y - Player.list[selfId].y + HEIGHT/2;
+		
+			drawRotatedImage(Img.kaboom,x1,y1,self.angle);
+			
+			
+			
+		}
+		catch(err)
+		{
+		}
+        }
+       
+        Kaboom.list[self.id] = self;       
+        return self;
+    }
+    Kaboom.list = {};
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+///////////////////////////////////////////All Classes///////////////////////////////////////////////////////////////	
+function numberToColorHsl(i) {//it will change numbers to colors
+    // as the function expects a value between 0 and 1, and red = 0° and green = 120°
+    // we convert the input to the appropriate hue value
+    var hue = i * 1.2 / 360;
+    // we convert hsl to rgb (saturation 100%, lightness 50%)
+    var rgb = hslToRgb(hue, 1, .5);
+    // we format to css value and return
+    return 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')'; 
+}	
+///////////////////////////////////////////init/////////////////////////////////////////////////////////////////////
+	
+	
+///////////////////////////////////////////init/////////////////////////////////////////////////////////////////////
+    socket.on('init',function(data){ //this will be reciving from server
+		if(data.selfId)
+			selfId = data.selfId;
+		if(data.selfParty)
+			selfParty = data.selfParty;
+        //{ player : [{id:123,number:'1',x:0,y:0},{id:1,number:'2',x:0,y:0}], bullet: []}
+        for(var i = 0 ; i < data.player.length; i++){//creating players from init pack
+            new Player(data.player[i]);
+        }
+        for(var i = 0 ; i < data.bullet.length; i++){//creating bullets from init pack
+            new Bullet(data.bullet[i]);
+        }
+        for(var i = 0 ; i < data.stone.length; i++){//creating stones from init pack
+            new Stone(data.stone[i]);
+        }
+		if(data.gift !== undefined)
+		{
+			for(var i = 0 ; i < data.gift.length; i++){//creating stones from init pack
+				new Gift(data.gift[i]);
+			}
+		}
+		if(data.earth !== undefined)
+		{
+			for(var i = 0 ; i < data.earth.length; i++){//creating stones from init pack
+				new Earth(data.earth[i]);
+			}
+		}
+    });
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+   
+   
+///////////////////////////////////////////update////////////////////////////////////////////////////////////////////
+    socket.on('update',function(data){//reciving update pack from server
+        //{ player : [{id:123,x:0,y:0},{id:1,x:0,y:0}], bullet: []}
+        for(var i = 0 ; i < data.player.length; i++){//update players
+            var pack = data.player[i];
+            var p = Player.list[pack.id];
+            if(p){
+                if(pack.x !== undefined)
+                    p.x = pack.x;
+                if(pack.y !== undefined)
+                    p.y = pack.y;
+                if(pack.hp !== undefined)
+                    p.hp = pack.hp;
+                if(pack.hpMax !== undefined)
+                    p.hpMax = pack.hpMax;
+                if(pack.score !== undefined)
+                    p.score = pack.score;
+                if(pack.angle !== undefined)
+                    p.angle = pack.angle;
+				if(pack.ufo !== undefined)
+					p.ufo = pack.ufo;
+				if(pack.rank !== undefined)
+					p.rank = pack.rank;
+				if(pack.update1Allow !== undefined)
+					p.update1Allow = pack.update1Allow;
+				if(pack.update2Allow !== undefined)
+					p.update2Allow = pack.update2Allow;
+				if(pack.update3Allow !== undefined)
+					p.update3Allow = pack.update3Allow;
+				if(pack.bonus !== undefined)
+					p.bonus = pack.bonus;
+				if(pack.isDead !== undefined)
+					p.isDead = pack.isDead;
+				if(pack.party !== undefined)
+					p.party = pack.party;
+				if(pack.whoKilled !== undefined)
+					p.whoKilled = pack.whoKilled;
+				if(pack.bonusIsEnable !== undefined)
+					p.bonusIsEnable = pack.bonusIsEnable;
+				if(pack.role !== undefined)
+					p.role = pack.role;
+				if(pack.name !== undefined)
+				{
+					p.name = pack.name;
+				}
+					
+					
+				if(data.mapX !== undefined)
+					mapXrange = data.mapX;
+				if(data.mapY !== undefined)
+					mapYrange = data.mapY;
+            }
+        }
+        for(var i = 0 ; i < data.bullet.length; i++){//update bullers
+            var pack = data.bullet[i];
+            var b = Bullet.list[data.bullet[i].id];
+            if(b){
+                if(pack.x !== undefined)
+                    b.x = pack.x;
+                if(pack.y !== undefined)
+                    b.y = pack.y;
+                if(pack.a !== undefined)
+                    b.angle = pack.a;
+            }
+        }
+        for(var i = 0 ; i < data.stone.length; i++){//update stones
+            var pack = data.stone[i];
+            var s = Stone.list[data.stone[i].id];
+            if(s){
+                if(pack.x !== undefined)
+                    s.x = pack.x;
+                if(pack.y !== undefined)
+                    s.y = pack.y;
+                if(pack.hp !== undefined)
+                    s.hp = pack.hp;
+                if(pack.radius !== undefined)
+                    s.radius = pack.radius;
+                if(pack.isOut !== undefined)
+                    s.isOut = pack.isOut;
+            }
+        }
+        for(var i = 0 ; i < data.gift.length; i++){//update gifts
+            var pack = data.gift[i];
+            var g = Gift.list[pack.id];
+            if(g){
+                if(pack.x !== undefined)
+                    g.x = pack.x;
+                if(pack.y !== undefined)
+                    g.y = pack.y;
+            }
+        }
+        for(var i = 0 ; i < data.earth.length; i++){//update earth
+            var pack = data.earth[i];
+            var e = Earth.list[pack.id];
+            if(e){
+                if(pack.x !== undefined)
+                    e.x = pack.x;
+                if(pack.y !== undefined)
+                    e.y = pack.y;
+                if(pack.isDestroyed !== undefined)
+                    e.isDestroyed = pack.isDestroyed;
+                if(pack.isPassed !== undefined)
+                    e.isPassed = pack.isPassed;
+                if(pack.hpMax !== undefined)
+                    e.hpMax = pack.hpMax;
+                if(pack.hp !== undefined)
+                    e.hp = pack.hp;
+            }
+        }
+    });
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   
+   
+   
+    
+///////////////////////////////////////////remove///////////////////////////////////////////////////////////////////
+    socket.on('remove',function(data){//recive the list of most be removed things
+        //{player:[12323],bullet:[12323,123123]}
+        for(var i = 0 ; i < data.player.length; i++){//remove players
+			try 
+			{
+			if(data.player.length>0)
+			{
+				new Kaboom(Player.list[data.player[i]].x,Player.list[data.player[i]].y,(Math.random()*Math.PI*2)* (180/Math.PI));
+			}
+			}
+			catch(err){}
+			delete Player.list[data.player[i]];
+        }
+        for(var i = 0 ; i < data.bullet.length; i++){//remove bullets
+            delete Bullet.list[data.bullet[i]];
+        }
+        for(var i = 0 ; i < data.stone.length; i++){//remove stones
+			try 
+			{
+			if(data.stone.length>0)
+			{
+				if(Stone.list[data.stone[i]].isOut == false)
+				{
+					new Kaboom(Stone.list[data.stone[i]].x,Stone.list[data.stone[i]].y,(Math.random()*Math.PI*2)* (180/Math.PI));
+				}
+			}
+			}
+			catch(err)
+			{
+			}
+            delete Stone.list[data.stone[i]];
+        }
+        for(var i = 0 ; i < data.gift.length; i++){//remove gifts
+            delete Gift.list[data.gift[i]];
+        }
+        for(var i = 0 ; i < data.earth.length; i++){//remove earth
+            delete Earth.list[data.earth[i]];
+        }
+    });
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   
+   
+   
+   
+///////////////////////////////////////////Main loop////////////////////////////////////////////////////////////////
+    setInterval(function(){//this will be called every 40 miliseconds
+	if(WIDTH != window.innerWidth || HEIGHT != window.innerHeight)//set width and height of game
+	{
+	   WIDTH = window.innerWidth;
+	   HEIGHT = window.innerHeight;
+	   ctxStyle.width = WIDTH;           //this will make the screen responsive
+	   ctxStyle.height = HEIGHT;         //this will make the screen responsive
+	}
+		if(!selfId)
+			return;
+        ctx.clearRect(0,0,WIDTH,HEIGHT);
+		drawMap();
+        for(var i in Stone.list)//draw stones
+            Stone.list[i].draw();
+        for(var i in Bullet.list)//draw Bullets
+            Bullet.list[i].draw();
+        for(var i in Earth.list)//draw Earth
+            Earth.list[i].draw();
+        for(var i in Gift.list)//draw Gifts
+            Gift.list[i].draw();
+        for(var i in EngineFire.list)//draw Engine fire
+            EngineFire.list[i].draw();
+        for(var i in Player.list)//draw Players
+            Player.list[i].draw();
+        for(var i in Kaboom.list)//draw Kabooms
+            Kaboom.list[i].draw();
+    },45);
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   
+   
+   
+   
+///////////////////////////////////////////Draw screen classes///////////////////////////////////////////////////////
+	var drawMap = function(){//draw map
+   var realX = WIDTH/2 - Player.list[selfId].x;
+   var realY = HEIGHT/2 - Player.list[selfId].y;
+		ctx.save();
+		//Draw Edge Rect
+		ctx.beginPath();
+		ctx.rect(realX, realY, mapXrange, mapYrange);
+		ctx.lineWidth = 10;
+		ctx.strokeStyle = 'blue';
+		ctx.stroke();
+		//Repeating Screen Image
+		var pat=ctx.createPattern(Img.mapLevel1,"repeat");
+		ctx.fillStyle=pat;//color #1e304f
+		ctx.fill();
+		
+		
+		
+		
+		
+		
+		
+		//Grid Background
+		ctx.globalAlpha = 0.1;
+		var p = 0;
+		for (var x = realX; x <= WIDTH; x += 150) {
+			ctx.moveTo(x + p, p);
+			ctx.lineTo(x + p, HEIGHT + p);
+		}
+		for (var y = realY; y <= HEIGHT; y += 150) {
+			ctx.moveTo(p,y + p);
+			ctx.lineTo(WIDTH + p,y + p);
+		}
+		ctx.lineWidth = 2;
+		ctx.strokeStyle = "gray";
+		ctx.stroke();
+		ctx.restore();
+   }
+   
+	var drawCircleConsole = function(name,x,y,hp,hpMax,score,rank,updateAllow,secondUpdateAllow,bonus){//draw console
+  
+		
+				
+				
+		//what side are we
+		var group;
+		if(Player.list[selfId].party == 1)
+		{
+		partyCoderShower.style.fontWeight="bold";
+		partyCoderShower.style.color="#99c0ff";
+		group = "YOU ARE EARTH PROTECTOR!<br/>Destroy Trappist-1 before destrooy yours";
+		partyCoderShower.innerHTML = group;
+		}
+		else
+		{
+		partyCoderShower.style.fontWeight="bold";
+		partyCoderShower.style.color="#ff9999";
+		group = "YOU ARE A TRAPPIST PROTECTOR!<br/>Destroy the earth before they destroy yours";
+		partyCoderShower.innerHTML = group;
+		}
+  
+  
+		//getting ready
+		ctx.save(); 
+		ctx.strokeStyle = '#c4c4c4';
+		ctx.globalAlpha=0.4;
+		//stop line
+		ctx.beginPath();
+		ctx.lineWidth = 2;
+		ctx.arc(x,y,49,0,2*Math.PI);
+		ctx.stroke();
+		//settings
+		ctx.beginPath();
+		ctx.lineWidth = 10;
+		
+		
+		//upside
+		ctx.beginPath();
+		ctx.bezierCurveTo(x-85,y-130,x-10,y-187,x+85,y-130);
+		ctx.stroke();
+		
+		//rightside
+		ctx.beginPath();
+		ctx.bezierCurveTo(x+130,y+90,x+200,y,x+130,y-90);
+		ctx.stroke();
+		
+		//leftside
+		ctx.beginPath();
+		ctx.bezierCurveTo(x-130,y+90,x-200,y,x-130,y-90);
+		ctx.stroke();
+        
+		//downside
+		ctx.beginPath();
+		ctx.bezierCurveTo(x-90,y+130,x,y+190,x+90,y+130);
+		ctx.stroke();
+		
+		//hp
+		var hpPercentage = hp / hpMax;      //this will go t hp class
+		var hpPercentage1 = hp / hpMax;      //this will go t hp class
+		var firstAngle = 0.685*Math.PI;
+		var secondAngle = 0.37*Math.PI;
+		var hpRadius = 145;
+		ctx.beginPath();
+		ctx.strokeStyle = 'red';
+		ctx.arc(x,y,hpRadius,-firstAngle,(secondAngle*hpPercentage)-firstAngle);
+		ctx.stroke();
+		
+		
+		//name
+		//drawText(WIDTH/2,50,name,40,"white",10); 
+		drawText(x,y-110,name,25,"white",6); 
+		
+		
+		
+
+		//score
+		var maxScore = "/100";
+		if(score < 100)
+			maxScore = "/100";
+		if(score > 100 && score < 600)
+			maxScore = "/600";
+		if(score >= 600 && score < 2000)
+			maxScore = "/2000";
+		if(score >= 2000 && score < 5000)
+			maxScore = "/5000";
+		if(score >= 5000)
+			maxScore = "";
+		
+		
+		drawText(x-25,y-90,"Score:",20,"white",0); 
+		drawText(x,y-50,score+maxScore,40,"white",9);
+		
+		
+		//bonus
+		drawText(x-47,y+80,"Right-click:",20,"white",0); 
+		drawText(x,y+115,bonus,30,"white",7);
+		
+		
+		
+		drawUfoUpdates(x,y,rank,updateAllow,secondUpdateAllow);
+		
+		
+		
+		ctx.restore();
+  }
+  
+  
+	var drawOpponentDetails = function(name,x,y,hp,hpMax,score,friendly){//draw enemyDetails
+			
+		var hpColor = '#c9ff87';
+		// Change color
+		if (hp <= hpMax/1.5 && hp > hpMax/2)
+		{
+			hpColor = 'yellow';
+		}  
+		else if (hp <= hpMax/2 && hp > hpMax/3)
+		{
+			hpColor = 'orange';
+		}
+		else if (hp <= hpMax/3)
+		{
+			hpColor = 'red';
+		}
+		
+		ctx.save();
+		if(friendly == true)
+		{
+			ctx.globalAlpha = 0.7;
+			drawText(x-10,y-75,"Friendly",20,"#aee878",3);
+		
+			ctx.globalAlpha = 0.1;
+			//drawText(x,y-80,"friend",15,"#aee878",5);
+			ctx.beginPath();
+			ctx.strokeStyle="#ffffff";
+			ctx.moveTo(WIDTH/2,HEIGHT/2);
+			ctx.lineTo(x,y);
+			ctx.stroke();
+		}
+		else
+		{
+			ctx.globalAlpha = 0.7;
+			drawText(x-10,y-75,"Enemy",20,"red",3);
+		
+			//ctx.globalAlpha = 0.1;
+			////drawText(x,y-80,"friend",15,"#aee878",5);
+			//ctx.beginPath();
+			//ctx.strokeStyle="#ffffff";
+			//ctx.moveTo(WIDTH/2,HEIGHT/2);
+			//ctx.lineTo(x,y);
+			//ctx.stroke();
+		}
+		ctx.globalAlpha = 0.7;
+		drawText(x,y-50,name,20,"white",5);
+		var lineHpWidth = 100 * hp / hpMax;
+		ctx.fillStyle = hpColor;
+		ctx.fillRect(x - lineHpWidth/2,y - 70,lineHpWidth,6);
+		ctx.restore();
+	
+		//var hpWidth = 20// * self.hp / self.hpMax;      //this will go to hp class
+		//ctx.beginPath();
+		//ctx.arc(x, y, hpWidth/2, 0, 2 * Math.PI, false);
+		//ctx.fillStyle = hpColor;
+		//ctx.fill();
+		
+			
+  }
+   
+   
+	var drawText = function(x,y,text,size,color,mistake){
+		var textToWrite = text+"";
+		var lengh = textToWrite.length;
+		ctx.fillStyle = color;
+		ctx.font= size + "px Impact";
+		ctx.fillText(textToWrite,x-lengh*mistake,y);
+}   
+   
+	var drawUfoUpdates = function(x,y,rank,updateAllow,secondUpdateAllow){
+	if(rank == 1)
+	{
+		if(myMx >= x+170 && myMx <= x+270 && myMy >= y-160 && myMy <= y-60)
+		ctx.drawImage(Img.update1,x+160,y-170,100,130);
+		else
+		ctx.drawImage(Img.update1,x+170,y-160);
+		if(myMx >= x+200 && myMx <= x+300 && myMy >= y-50 && myMy <= y+50)
+		{
+		ctx.drawImage(Img.update2,x+190,y-60,100,130);
+		}
+		else
+		ctx.drawImage(Img.update2,x+200,y-50);
+		if(myMx >= x+170 && myMx <= x+270 && myMy >= y+60 && myMy <= y+160)
+		{
+		ctx.drawImage(Img.update3,x+160,y+50,100,130);
+		}
+		else
+		ctx.drawImage(Img.update3,x+170,y+60);
+	}
+	if(rank == 2)
+	{
+		if(myMx >= x+170 && myMx <= x+270 && myMy >= y-160 && myMy <= y-60)
+		ctx.drawImage(Img.update1_1,x+160,y-170,100,130);
+		else
+		ctx.drawImage(Img.update1_1,x+170,y-160);
+		if(myMx >= x+200 && myMx <= x+300 && myMy >= y-50 && myMy <= y+50)
+		{
+		ctx.drawImage(Img.update2_1,x+190,y-60,100,130);
+		}
+		else
+		ctx.drawImage(Img.update2_1,x+200,y-50);
+		if(myMx >= x+170 && myMx <= x+270 && myMy >= y+60 && myMy <= y+160)
+		{
+		ctx.drawImage(Img.update3_1,x+160,y+50,100,130);
+		}
+		else
+		ctx.drawImage(Img.update3_1,x+170,y+60);
+	}
+	if(rank == 3)
+	{
+		if(myMx >= x+170 && myMx <= x+270 && myMy >= y-160 && myMy <= y-60)
+		ctx.drawImage(Img.update1_2,x+160,y-170,100,130);
+		else
+		ctx.drawImage(Img.update1_2,x+170,y-160);
+		if(myMx >= x+200 && myMx <= x+300 && myMy >= y-50 && myMy <= y+50)
+		{
+		ctx.drawImage(Img.update2_2,x+190,y-60,100,130);
+		}
+		else
+		ctx.drawImage(Img.update2_2,x+200,y-50);
+		if(myMx >= x+170 && myMx <= x+270 && myMy >= y+60 && myMy <= y+160)
+		{
+		ctx.drawImage(Img.update3_2,x+160,y+50,100,130);
+		}
+		else
+		ctx.drawImage(Img.update3_2,x+170,y+60);
+	}
+	if(rank == 4)
+	{
+		if(myMx >= x+170 && myMx <= x+270 && myMy >= y-160 && myMy <= y-60)
+		ctx.drawImage(Img.update1_3,x+160,y-170,100,130);
+		else
+		ctx.drawImage(Img.update1_3,x+170,y-160);
+		if(myMx >= x+200 && myMx <= x+300 && myMy >= y-50 && myMy <= y+50)
+		{
+		ctx.drawImage(Img.update2_3,x+190,y-60,100,130);
+		}
+		else
+		ctx.drawImage(Img.update2_3,x+200,y-50);
+		if(myMx >= x+170 && myMx <= x+270 && myMy >= y+60 && myMy <= y+160)
+		{
+		ctx.drawImage(Img.update3_3,x+160,y+50,100,130);
+		}
+		else
+		ctx.drawImage(Img.update3_3,x+170,y+60);
+	}
+}
+
+	var drawExplosion = function(x,y){//draw Explosion
+		ctx.save(); 
+		ctx.globalAlpha=0.4;
+		
+			ctx.beginPath(); 
+			ctx.arc(x, y, 30, 0, 5 * Math.PI, false);
+			ctx.fillStyle = 'red';
+			ctx.fill();
+			ctx.beginPath(); 
+			ctx.arc(x, y, 25, 0, 5 * Math.PI, false);
+			ctx.fillStyle = 'orange';
+			ctx.fill();
+			ctx.beginPath(); 
+			ctx.arc(x, y, 20, 0, 5 * Math.PI, false);
+			ctx.fillStyle = 'yellow';
+			ctx.fill();
+			ctx.beginPath(); 
+			ctx.arc(x, y, 15, 0, 5 * Math.PI, false);
+			ctx.fillStyle = 'blue';
+			ctx.fill();
+		ctx.restore(); 
+  }
+  
+	var drawShield = function(x,y){//draw Explosion
+			ctx.save();
+			ctx.beginPath();
+			ctx.fillStyle = 'none';
+			ctx.globalAlpha=0.2;
+			ctx.lineWidth = 80;
+			ctx.strokeStyle = 'white';
+			ctx.fill();
+			ctx.arc(x, y, 40, 0, 5 * Math.PI, false);
+			ctx.stroke();
+			ctx.restore();
+  }
+		
+		
+   
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   
+   
+   
+   
+/////////////////////////////////////////////////Classes//////////////////////////////////////////////////////////////
+function shadeColor1(color, percent) {  // deprecated. See below. lighen or darken any color
+    var num = parseInt(color.slice(1),16), amt = Math.round(2.55 * percent), R = (num >> 16) + amt, G = (num >> 8 & 0x00FF) + amt, B = (num & 0x0000FF) + amt;
+    return "#" + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 + (G<255?G<1?0:G:255)*0x100 + (B<255?B<1?0:B:255)).toString(16).slice(1);
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   
+   
+///////////////////////////////////////////Intraction classss////////////////////////////////////////////////////////
+    document.onmousedown = function(event){//mouse click pushed
+	if(event.button === 0) {//attack and update
+        socket.emit('mouseAction',{inputId:'attack',state:true});
+		if(event.clientX >= currentX+170 && event.clientX <= currentX+270 && event.clientY >= currentY-160 && event.clientY <= currentY-60)//choose updateufo depends on where they click
+		{
+		socket.emit('ufoUpdate',{ufo:1});
+		}
+		else if(event.clientX >= currentX+200 && event.clientX <= currentX+300 && event.clientY >= currentY-50 && event.clientY <= currentY+50)//choose updateufo depends on where they click
+		{
+		socket.emit('ufoUpdate',{ufo:2});
+		}
+		else if(event.clientX >= currentX+170 && event.clientX <= currentX+270 && event.clientY >= currentY+60 && event.clientY <= currentY+160)//choose updateufo depends on where they click
+		{
+		socket.emit('ufoUpdate',{ufo:3});
+		}
+	}
+	if (event.button === 2) {//bonus use
+		socket.emit('bonusUse',{state:true});
+    }
+	
+    }
+    document.onmouseup = function(event){//mouse click released
+		socket.emit('mouseAction',{inputId:'attack',state:false});//no attack anymore
+		if (event.button === 2) {//no bonus anymore
+			socket.emit('bonusUse',{state:false});
+		}
+    }
+    document.onmousemove = function(event){//mouse movement
+        var x = event.clientX;       //you might need to transfer these codes to server
+        var y = event.clientY;      //you might need to transfer these codes to server
+        socket.emit('mouseAction',{inputId:'mouseAngle',mouseX:x,mouseY:y,width:WIDTH,height:HEIGHT});
+		myMx = x;
+		myMy = y;
+    }
+   
+   
+	document.onkeydown = function(event){//this will check keyboard buttons for enter ppressing and opens the chat system
+		if(event.keyCode === 13)	//check enter
+		{
+			if(chatForm.style.display === "none")//set chatForm to visible if invisible
+			{
+				chatForm.style.display = "block";
+				chatText.style.opacity = 1;
+				chatInput.focus();
+			}
+			else
+			{
+				chatForm.style.display = "none";//set chatForm to invisible if visible
+			}
+		}
+	}
+
+	
+</script>
+	</body>
+</html>
