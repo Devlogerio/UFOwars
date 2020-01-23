@@ -16,12 +16,10 @@ It was made in 2016 as an indie game for competing in .io genre
 
 ## How to run:
 Install nodejs
-Install libraries (express, socket.io, victorjs)
+Install libraries (express, socket.io)
 Type (npm install) in the terminal
 Run the server using (node app.js) in the terminal
 Open the page on localhost://port (the port is 2000)
-
-## About:
 
 ## Contact:
 Made by: Cena Abachi --- 
