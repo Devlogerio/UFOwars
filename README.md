@@ -11,8 +11,13 @@ You can also see who has the most score by checking the leaderboard up.
 This game is made by Nodejs/Javascript/Socket.io/HTML5, No library is used for visuals
 It was made in 2016 as an indie game for competing in .io genre
 
-## More games like this:
+## More of my games like this:
 #http://pury.space
+#http://ufowars.space
+#http://sperms.space
+#http://kalamebaz.space
+#http://cyberbugs.space
+#http://aliens.website
 
 ## How to run:
 Install nodejs
