@@ -1,4 +1,4 @@
-Playable at: https://ufowars-bd39cf00e6e8.herokuapp.com/
+Play now: https://ufowars-bd39cf00e6e8.herokuapp.com/
 
 # Ufowars
 A multiplayer .io online game made by HTML5 Javascript Nndejs and socket.io (no game engine is used).
