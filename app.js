@@ -1,12 +1,4 @@
-
-///////////////////////////////////////////DataBase Ends/////////////////////////////////////////////////////
-//Login: goldpriest/phoenix
-//Data base name: ufowars
-//collection names: accounts/progress
-//var mongojs = require("mongojs");//database type
-//var db = mongojs('localhost:27017/ufowars', ['accounts','progress']);//database login
-//https://www.transparenttextures.com/ maps
-//font Jokerman
+// Made by Cena Abachi Known as Devlogerio, find me on Youtube, instagram and Github: Devlogeiro LinkedIn: Cena Abachi
 //cheat 5000 score 09128573237091000713720912857323709100071372
 ///////////////////////////////////////////Server Ends///////////////////////////////////////////////////////
 var express = require('express');		 //web info
