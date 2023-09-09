@@ -11,9 +11,6 @@ You can also see who has the most score by checking the leaderboard.
 This game is made by Nodejs/Javascript/Socket.io/HTML5, No library is used for visuals
 It was made in 2016 as an indie game to compete in .io genre
 
-## More of my games like this:
-https://github.com/Devlogerio?tab=repositories
-
 ## How to run:
 Install nodejs
 Install libraries (express, socket.io)
@@ -21,12 +18,8 @@ Type (npm install) in the terminal
 Run the server using (node app.js) in the terminal
 Open the page on localhost://port (the port is 2000)
 
-## About the versions:
-Every single change is submitted and documented as files and backups on my backup hard drives, If you have any request or question about previous versions of this game or any other of my games, you should call me, I am unable to document every single of my changes on GitHub so everything is backed up other places and only the final version/versions are here.
-<I have the code from empty to full final version as files!>
-
-## Reason of being open source
-Github private repository is forbidden in my country so I decided to make all of my games open source for the public
+## More of my games like this:
+https://github.com/Devlogerio?tab=repositories
 
 ## Contact:
 Made by: Cena Abachi  
