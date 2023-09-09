@@ -1,4 +1,4 @@
-# Ufowars.space
+# Ufowars
 A multiplayer .io online game made by Html5 Javascript Nndejs and socket.io (no game engine is used).
 Choose your faction and fight for your planet. This is a multiplayer online .io game made by Javasript/Nodejs without the use of a visual library.
 
